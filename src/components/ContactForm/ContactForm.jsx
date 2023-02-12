@@ -1,23 +1,22 @@
-import { nanoid } from "nanoid";
 import { useDispatch, useSelector } from "react-redux";
 import { selectContacts } from "redux/selectors";
-import { addNewContact } from "redux/contactsSlice";
+import { addContact} from "redux/operations";
 import style from "./ContactForm.module.css";
+
 
 const ContactForm = () => {
 	const contacts = useSelector(selectContacts);
 	const dispatch = useDispatch();
 
-	const addContact = (e) => {
+	const handleAddContact = (e) => {
 		e.preventDefault();
 		let nameOntheList = false;
 		const form = e.target;
-		const name = e.target.name.value;
-		const number = e.target.number.value;
+		const name = form.name.value;
+		const number = form.number.value;
 		const toLowerCase = name.toLowerCase();
 
 		const newContact = {
-			id: nanoid(),
 			name: name,
 			number: number,
 		};
@@ -31,11 +30,11 @@ const ContactForm = () => {
 
 		if (nameOntheList) return;
 
-		dispatch(addNewContact(newContact));
+		dispatch(addContact(newContact));
 		form.reset();
 	};
 	return (
-		<form className={style.form} onSubmit={addContact}>
+		<form className={style.form} onSubmit={handleAddContact}>
 			<label htmlFor="name">
 				Name
 				<input

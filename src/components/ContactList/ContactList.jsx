@@ -1,22 +1,21 @@
-import style from "./Contacts.module.css";
-import { selectFilterValue, selectContacts } from "redux/selectors";
+import { selectFilterValue, selectContacts, selectErrorStatus } from "redux/selectors";
 import { useSelector, useDispatch } from "react-redux";
-import { deleteContact } from "redux/contactsSlice";
+import { deleteContact } from "redux/operations";
+import style from "./Contacts.module.css";
 
 const ContactList = () => {
+	const dispatch = useDispatch();
 	const contacts = useSelector(selectContacts);
 	const filter = useSelector(selectFilterValue);
-	const dispatch = useDispatch();
+	const error = useSelector(selectErrorStatus)
 
+	console.log(contacts)
+	
 	const filteredContacts = contacts.filter(
 		(contact) =>
 			contact.name.toLowerCase().includes(filter.toLowerCase()) ||
 			contact.number.replace(/-|\s/g, "").includes(filter.replace(/-|\s/g, "")),
 	);
-
-	const handleDelete = (id) => {
-		dispatch(deleteContact(id));
-	};
 
 	return filteredContacts.length > 0 ? (
 		<ul className={style.ContactList}>
@@ -27,7 +26,7 @@ const ContactList = () => {
 						<button
 							className={style.contactBtn}
 							type="submit"
-							onClick={() => handleDelete(id)}
+							onClick={() => dispatch(deleteContact(id))}
 						>
 							Delete
 						</button>
@@ -35,8 +34,7 @@ const ContactList = () => {
 				);
 			})}
 		</ul>
-	) : (
-		<p>No contacts.</p>
+	) : ((error && <p>Error: {error}</p> )|| <p>No contacts.</p>
 	);
 };
 

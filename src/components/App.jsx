@@ -1,18 +1,21 @@
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import {selectIsLoadingStatus, selectErrorStatus } from "redux/selectors"
+import { fetchContacts } from "redux/operations";
 import ContactForm from "./ContactForm/ContactForm";
 import { Filter } from "./Filter/Filter";
 import ContactList from "./ContactList/ContactList";
 import style from "./App.module.css";
-import { selectContacts } from "redux/selectors";
+
 
 const App = () => {
-	const contacts = useSelector(selectContacts);
-	useEffect(() => {
-		if (contacts !== []) {
-			localStorage.setItem("savedContacts", JSON.stringify(contacts));
-		}
-	}, [contacts]);
+  const isLoading = useSelector(selectIsLoadingStatus);
+  const error = useSelector(selectErrorStatus);
+	const dispatch = useDispatch();
+
+		useEffect(() => {
+dispatch(fetchContacts())
+	}, [dispatch]);
 
 	return (
 		<div className={style.container}>
@@ -20,7 +23,7 @@ const App = () => {
 			<ContactForm />
 			<h2>Contacts</h2>
 			<Filter />
-			<ContactList />
+      {isLoading && !error ? <p>Loading...</p> : <ContactList />}
 		</div>
 	);
 };
