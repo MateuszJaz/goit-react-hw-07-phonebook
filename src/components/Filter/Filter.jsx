@@ -12,7 +12,7 @@ export const Filter = () => {
 
 	return (
 		<>
-			<label>Find contacts by name or number</label>
+			<label htmlFor="filter">Find contacts by name or number</label>
 			<input
 				className={style.filterInput}
 				type="text"

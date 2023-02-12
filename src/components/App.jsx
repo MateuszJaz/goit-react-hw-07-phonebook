@@ -4,10 +4,10 @@ import ContactForm from "./ContactForm/ContactForm";
 import { Filter } from "./Filter/Filter";
 import ContactList from "./ContactList/ContactList";
 import style from "./App.module.css";
-import { getContacts } from "redux/selectors";
+import { selectContacts } from "redux/selectors";
 
 const App = () => {
-	const contacts = useSelector(getContacts);
+	const contacts = useSelector(selectContacts);
 	useEffect(() => {
 		if (contacts !== []) {
 			localStorage.setItem("savedContacts", JSON.stringify(contacts));
