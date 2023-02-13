@@ -9,8 +9,6 @@ const ContactList = () => {
 	const filter = useSelector(selectFilterValue);
 	const error = useSelector(selectErrorStatus)
 
-	console.log(contacts)
-	
 	const filteredContacts = contacts.filter(
 		(contact) =>
 			contact.name.toLowerCase().includes(filter.toLowerCase()) ||
@@ -21,16 +19,16 @@ const ContactList = () => {
 		<ul className={style.ContactList}>
 			{filteredContacts.map(({ id, name, number }) => {
 				return (
-					<li className={style.contactsItem} key={id}>
-						{name}: {number}
-						<button
-							className={style.contactBtn}
-							type="submit"
-							onClick={() => dispatch(deleteContact(id))}
-						>
-							Delete
-						</button>
-					</li>
+				<li className={style.contactsItem} key={id}>
+					{name}: {number}
+					<button
+						className={style.contactBtn}
+						type="submit"
+						onClick={() => dispatch(deleteContact(id))}
+					>
+						Delete
+					</button>
+				</li>
 				);
 			})}
 		</ul>
