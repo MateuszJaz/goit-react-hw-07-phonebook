@@ -20,18 +20,6 @@ const contactsSlice = createSlice({
   name: 'contacts',
   initialState,
 
-  // reducers: {
-  //   // addNewContact(state, action) {
-  //   //   state.items.push(action.payload);
-  //   // },
-
-  //   deleteContact(state, action) {
-  //     state.items = state.items.filter(
-  //       contact => contact.id !== action.payload
-  //     );
-  //   },
-  // },
-
   extraReducers: {
     [fetchContacts.pending]: handlePending,
     [fetchContacts.fulfilled](state, action) {
